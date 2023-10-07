@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stars Arena Giveaway</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      #followLink {
+        margin-top: 30px;
+        display: block;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      #followLink:hover {
+        color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Stars Arena Giveaway App</h2>
+    <p>Please enter the Stars Arena post URL below:</p>
+    <p>
+      <i>Note: The winner is chosen only from the commenters below the post.</i>
+    </p>
+    <!-- Açıklamayı buraya ekledim -->
+
+    <input type="text" id="urlInput" placeholder="Stars Arena post URL" />
+    <button onclick="startGiveaway()">Start Giveaway</button>
+
+    <div id="result"></div>
+
+    <a
+      href="https://www.starsarena.com/izzetemredemir/"
+      target="_blank"
+      id="followLink"
+      >Follow me on Stars Arena!</a
+    >
+
+    <script>
+      async function startGiveaway() {
+        const urlInput = document.getElementById("urlInput").value;
+        const apiUrl = `https://giveawaybackend-27jjydhzba-ey.a.run.app/getRandomHandle?url=${urlInput}`;
+
+        try {
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+
+          document.getElementById("result").innerHTML = `
+                    Total Participants: ${data.totalHandles} <br />
+                    Winner: ${data.randomHandle}
+                `;
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred!");
+        }
+      }
+    </script>
+  </body>
+</html>
